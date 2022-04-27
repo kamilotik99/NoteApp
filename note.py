@@ -89,11 +89,12 @@ class NoteApp(App):
         
 
     def load_notes(self):
-        with open(self.notes_kb) as fd:
-            data = json.load(fd)
-        if data == []:
-            data = [{'title': 'Привет!', 'content': 'Начни использовать это приложение прямо сейчас'}]
-        self.notes.data = data 
+        if not exists(self.notes_kb):
+            data = [{'title': 'Привет!', 'content': 'Начни использовать это приложение прямо сейчас'}]       
+        else:
+            with open(self.notes_kb) as fd:
+                data = json.load(fd)
+        self.notes.data = data  
 
     def save_notes(self):
         with open(self.notes_kb, 'w') as fd:
